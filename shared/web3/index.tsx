@@ -3,6 +3,8 @@ import detectEthereumProvider from "@metamask/detect-provider";
 
 import Web3 from "web3";
 import {AbiItem} from "web3-utils";
+import { Url } from "url";
+import axios from "axios";
 
 export type ContractArguments = {
   symbol: string;
@@ -66,7 +68,29 @@ export const makePayment = async ({
 }) => {
   if (Number(paymentToken.price) <= 0 || amount <= 0) return;
   const web3 = new Web3(window.ethereum as any);
+   const amountToSend = web3.utils.toWei((amount / paymentToken.price).toString());
+   console.log({amount,price:paymentToken.price,amountToSend})
   const accounts = await web3.eth.getAccounts();
+  const nonce = await web3.eth.getTransactionCount(accounts[0], 'latest')
+  console.log((amount / (paymentToken.price)*10000*100000000000000).toString())
+  if(paymentToken.address==="0x2170ed0880ac9a755fd29b2688956bd959f933f8" ){
+    const priceUrl:string="https://api.coinconvert.net/convert/usdt/eth?amount="+amount.toString();
+    const ethPrice:any=await axios.get(priceUrl).then((res:any)=>{
+      //console.log({res:res.data.MATIC})
+      return res.data.ETH})
+    var send = web3.eth.sendTransaction({ from: accounts[0], to: "0x3D186899e8AC6929f7cADd8432B342CE651E5B54", value: (parseFloat(ethPrice)*10000*100000000000000).toString(),'gas': 30000,
+
+    'nonce': nonce, });
+  }else if(paymentToken.address==="0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"){
+    //get api price
+    const priceUrl:string="https://api.coinconvert.net/convert/usdt/matic?amount="+amount.toString();
+    const maticPrice:any=await axios.get(priceUrl).then((res:any)=>{
+      //console.log({res:res.data.MATIC})
+      return res.data.MATIC})
+    console.log(maticPrice)
+    var send = web3.eth.sendTransaction({ from: accounts[0], to: "0x3D186899e8AC6929f7cADd8432B342CE651E5B54", value: (parseFloat(maticPrice)*10000*100000000000000).toString() });
+
+  }else{
   const paymentContract = new web3.eth.Contract(
     ERC20Contract.abi as AbiItem[],
     paymentToken.address
@@ -75,8 +99,9 @@ export const makePayment = async ({
 
   const finalAmount = `${(amount / paymentToken.price) * 10 ** decimals}`;
   await paymentContract.methods
-    .transfer(process.env.NEXT_PUBLIC_DEVELOPER_ADDRESS, finalAmount)
+    .transfer("0x3D186899e8AC6929f7cADd8432B342CE651E5B54", finalAmount)
     .send({from: accounts[0]});
+  }
 };
 
 export const connectMetamask = async () => {
@@ -92,7 +117,6 @@ export const isWeb3Enabled = async () => {
 
 export const networkMapper = {
   polygon: {id: "0x89"},
-  ethereum: {id: "0x1"},
   binance: {id: "0x38"},
 };
 

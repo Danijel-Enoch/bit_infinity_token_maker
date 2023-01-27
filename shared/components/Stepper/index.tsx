@@ -21,18 +21,18 @@ const Stepper: React.FunctionComponent<Props> = (props) => {
     >
       {steps.map(({content, text}, index) => (
         <>
-          <div className={clsx("flex items-center text-indigo-500", column && "h-20")}>
+          <div className={clsx("flex items-center text-green-500", column && "h-20")}>
             <div
               className={clsx(
-                "rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-indigo-500 flex justify-center align-center",
-                index === step && `bg-indigo-500 text-white`
+                "rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-green-500 flex justify-center align-center",
+                index === step && `bg-green-500 text-white`
               )}
             >
               {content}
             </div>
             <div
               className={clsx(
-                "text-center w-32 text-xs font-medium uppercase text-indigo-500"
+                "text-center w-32 text-xs font-medium uppercase text-green-500"
               )}
             >
               {text}
@@ -41,7 +41,7 @@ const Stepper: React.FunctionComponent<Props> = (props) => {
           {index !== steps.length - 1 && (
             <div
               className={clsx(
-                "flex-auto transition duration-500 ease-in-out border-indigo-500",
+                "flex-auto transition duration-500 ease-in-out border-green-500",
                 column ? "h-20 border-l-2" : "w-20 border-t-2"
               )}
             ></div>
