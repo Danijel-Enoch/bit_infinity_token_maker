@@ -44,6 +44,14 @@ const Create: React.FunctionComponent<Props> = (props) => {
 
       if (!provider) return;
 
+      console.log({price})
+      if(price===0){
+        setStep((prev) => prev + 1);
+      const tx = await deploy(data);
+      setStep(0);
+      console.log({tx});
+      }else{
+
       await makePayment({
         amount: price,
         paymentToken: {
@@ -58,6 +66,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
       console.log({tx});
         }
       });
+    }
     } catch (err) {
       console.log({err});
     }
