@@ -56,7 +56,7 @@ const PriceCard: React.FunctionComponent<Props> = (props) => {
             </ul>
             <button
                 type="button"
-                className="w-full px-3 py-3 text-sm shadow rounded-lg text-indigo-500 hover:text-white bg-white hover:bg-indigo-500 transition-colors duration-700 transform"
+                className="w-full px-3 py-3 text-sm shadow rounded-lg text-green-500 hover:text-white bg-white hover:bg-green-500 transition-colors duration-700 transform"
             >
                 Continue
             </button>

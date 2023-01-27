@@ -40,6 +40,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
       const {price} = tokenTypes.find((tkn) => tkn.id === data.tokenType);
       const paymentToken = cryptoPrices.find((price) => price.id === data.payment);
       const provider = await isWeb3Enabled();
+      console.log({data})
 
       if (!provider) return;
 
@@ -49,12 +50,14 @@ const Create: React.FunctionComponent<Props> = (props) => {
           ...paymentToken,
           address: tokens[data.network][paymentToken.id].address,
         },
-      });
-      setStep((prev) => prev + 1);
+      }).then(async(res:any)=>{
+        if(res){
+        setStep((prev) => prev + 1);
       const tx = await deploy(data);
       setStep(0);
-
       console.log({tx});
+        }
+      });
     } catch (err) {
       console.log({err});
     }
@@ -64,16 +67,18 @@ const Create: React.FunctionComponent<Props> = (props) => {
     try {
       await (window.ethereum as any).request({
         method: "wallet_switchEthereumChain",
-        params: [{chainId: networkMapper.ethereum.id}],
+        params: [{chainId: networkMapper.binance.id}],
       });
       const {data} = await axios.get(priceUrl);
-      const paymentTokens = Object.entries(tokens.ethereum);
+      const paymentTokens = Object.entries(tokens.binance);
       const prices = paymentTokens.map((entry) => {
+       // console.log({entry})
         const [match, pay] = entry;
         if (data[match]) return {...pay, price: data[match].usd, id: match};
         return {...pay, price: 1};
       });
       await connectMetamask()
+      console.log({prices})
       setCryptoPrices(prices);
     } catch (err) {
       console.log("Error on initialize", err);
@@ -104,7 +109,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
           maxSupply: "10000000",
           cappital: "10000000",
           payment: "ethereum",
-          network: "ethereum",
+          network: "binance",
           tokenType: "0",
           burnable: false,
           mintable: false,
@@ -116,7 +121,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
         {({setFieldValue, values}: any) => {
           const currentToken = tokenTypes.find((tkn) => tkn.id === values.tokenType);
           const changeWalletAddress = async (
-            nxtNetwork: "polygon" | "binance" | "ethereum"
+            nxtNetwork: "polygon" | "binance"
           ) => {
             await (window.ethereum as any).request({
               method: "wallet_switchEthereumChain",
@@ -132,6 +137,8 @@ const Create: React.FunctionComponent<Props> = (props) => {
                   className="flex justify-around flex-col sm:flex-row w-full"
                   style={{alignItems: "center"}}
                 >
+
+                  {console.log({cryptoPrices})}
                   <SelectInput
                     onChange={(val) => setFieldValue("payment", val)}
                     value={values.payment}
@@ -157,7 +164,6 @@ const Create: React.FunctionComponent<Props> = (props) => {
                     onChange={changeWalletAddress}
                     options={[
                       {node: "Polygon", value: "polygon"},
-                      {node: "Ethereum", value: "ethereum"},
                       {node: "Binance", value: "binance"},
                     ]}
                   />
