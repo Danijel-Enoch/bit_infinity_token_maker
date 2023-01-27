@@ -56,12 +56,12 @@ const Landing: React.FunctionComponent<Props> = (props) => {
       <main
         className={clsx(
           "relative flex w-full flex-1 px-10 md:px-20 text-center",
-          "bg-gradient-to-r from-one to-three"
+          "bg-gradient-to-r from-two to-three"
         )}
       >
         <img
-          src={"/ethereumChip.png"}
-          className="absolute right-52 top-24 w-74 h-74 opacity-20"
+          src={"https://seeklogo.com/images/B/binance-coin-bnb-logo-97F9D55608-seeklogo.com.png"}
+          className="absolute right-52 top-40 w-74 h-74 opacity-6"
         />
         <div className="relative w-full h-screen flex justify-between max-w-6xl items-center">
           <div className="max-w-md align-left flex flex-col fixed top-25">

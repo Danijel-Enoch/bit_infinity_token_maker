@@ -1,7 +1,7 @@
 export const freePlan = {
   id: "0",
   title: "Free Token",
-  price: 0,
+  price: 50,
   conditions: {
     ethereumCompatible: {
       title: "Ethereum compatible",
@@ -45,7 +45,7 @@ export const freePlan = {
 export const basePlan = {
   id: "1",
   title: "Basic Token",
-  price: 100,
+  price: 150,
   conditions: {
     ethereumCompatible: {
       title: "Ethereum compatible",
@@ -89,7 +89,7 @@ export const basePlan = {
 export const customPlan = {
   id: "2",
   title: "Custom Token",
-  price: 150,
+  price: 200,
   conditions: {
     ethereumCompatible: {
       title: "Ethereum compatible",
@@ -133,7 +133,7 @@ export const customPlan = {
 export const mintable = {
   id: "3",
   title: "Mintable Token",
-  price: 200,
+  price: 250,
   conditions: {
     ethereumCompatible: {
       title: "Ethereum compatible",
@@ -177,7 +177,7 @@ export const mintable = {
 export const unlimited = {
   id: "4",
   title: "Unlimited Token",
-  price: 250,
+  price: 300,
   conditions: {
     ethereumCompatible: {
       title: "Ethereum compatible",
@@ -221,7 +221,7 @@ export const unlimited = {
 export const fullToken = {
   id: "5",
   title: "Full Token",
-  price: 300,
+  price: 350,
   conditions: {
     ethereumCompatible: {
       title: "Ethereum compatible",

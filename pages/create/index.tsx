@@ -184,7 +184,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
                 >
                   <Card className="w-full z-10 grid grid-cols-2 gap-4">
                     <div className="col-span-2">
-                      <h4 className="text-lg text-center">Create ERC20 Token</h4>
+                      <h4 className="text-lg text-center">Create BEP20 Token</h4>
                     </div>
                     <div className="col-span-2 sm:col-span-1">
                       <TextInput label="Token name" name="name" />
