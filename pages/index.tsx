@@ -6,7 +6,7 @@ import ArrowDownIcon from "@mui/icons-material/ArrowDownward";
 
 import metamaskImage from "../public/metamask.png";
 import ethereumImage from "../public/ethereum.png";
-import appImage from "../public/onlyLogo.png";
+import appImage from "../public/logo-1-light.png";
 
 import Card from "../shared/components/Card";
 import PriceCard from "../shared/components/PriceCard";
@@ -174,7 +174,7 @@ const Landing: React.FunctionComponent<Props> = (props) => {
               <LandingCard
                 title={feature.title}
                 content={feature.content}
-                className="bg-indigo-50"
+                className="bg-green"
               />
             </div>
           ))}
