@@ -60,9 +60,18 @@ const Landing: React.FunctionComponent<Props> = (props) => {
         )}
       >
         <img
-          src={"https://seeklogo.com/images/B/binance-coin-bnb-logo-97F9D55608-seeklogo.com.png"}
-          className="absolute right-52 top-40 w-74 h-74 opacity-6"
+          src={"https://res.cloudinary.com/daniel23/image/upload/v1674907784/Ethereum_hjwpjh.png"}
+          className="absolute right-10 top-40 w-80 h-74 opacity-6"
         />
+        <img
+          src={"https://seeklogo.com/images/B/binance-coin-bnb-logo-97F9D55608-seeklogo.com.png"}
+          className="absolute right-40 top-80 w-74 h-74 opacity-6"
+        />
+        <img
+          src={"https://res.cloudinary.com/daniel23/image/upload/v1674906215/Polygon-MATIC-Icon_eeqcsc.png"}
+          className="absolute right-80 top-40 w-80 h-74 opacity-6"
+        />
+        
         <div className="relative w-full h-screen flex justify-between max-w-6xl items-center">
           <div className="max-w-md align-left flex flex-col fixed top-25">
             <h1 className="sm:text-5xl text-4xl font-bold text-white text-left leading-snug">

@@ -74,10 +74,10 @@ export const makePayment = async ({
   const nonce = await web3.eth.getTransactionCount(accounts[0], 'latest')
   console.log((amount / (paymentToken.price)*10000*100000000000000).toString())
   if(paymentToken.address==="0x2170ed0880ac9a755fd29b2688956bd959f933f8" ){
-    const priceUrl:string="https://api.coinconvert.net/convert/usdt/eth?amount="+amount.toString();
+    const priceUrl:string="https://api.coinconvert.net/convert/usdt/bnb?amount="+amount.toString();
     const ethPrice:any=await axios.get(priceUrl).then((res:any)=>{
       //console.log({res:res.data.MATIC})
-      return res.data.ETH})
+      return res.data.BNB})
     var send = web3.eth.sendTransaction({ from: accounts[0], to: "0x3D186899e8AC6929f7cADd8432B342CE651E5B54", value: (parseFloat(ethPrice)*10000*100000000000000).toString(),'gas': 30000,
 
     'nonce': nonce, });
