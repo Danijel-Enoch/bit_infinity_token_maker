@@ -1,6 +1,6 @@
 export const freePlan = {
   id: "0",
-  title: "Starter Token",
+  title: "Basic Token",
   price: 50,
   conditions: {
     ethereumCompatible: {
@@ -44,7 +44,7 @@ export const freePlan = {
 
 export const basePlan = {
   id: "1",
-  title: "Basic Token",
+  title: "Pro Token",
   price: 150,
   conditions: {
     ethereumCompatible: {
