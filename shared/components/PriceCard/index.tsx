@@ -16,6 +16,9 @@ interface Props {
 }
 
 const PriceCard: React.FunctionComponent<Props> = (props) => {
+    const changePage=()=>{
+        window.location.href = "/create"
+    }
     const {features, title, price, classes} = props;
 
     return (
@@ -56,6 +59,7 @@ const PriceCard: React.FunctionComponent<Props> = (props) => {
             </ul>
             <button
                 type="button"
+                onClick={()=>changePage()}
                 className="w-full px-3 py-3 text-sm shadow rounded-lg text-green-500 hover:text-white bg-white hover:bg-green-500 transition-colors duration-700 transform"
             >
                 Continue
