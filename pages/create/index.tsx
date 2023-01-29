@@ -159,13 +159,15 @@ const Create: React.FunctionComponent<Props> = (props) => {
                       img: currency.img as any,
                     }))}
                   />
+                  
                   <SelectInput
-                    label="Token type"
+                    label='Token type '
                     value={values.tokenType}
                     classes={{root: "w-40"}}
                     onChange={(value: string) => setFieldValue("tokenType", value)}
                     options={tokenTypes.map(({id, title}) => ({node: title, value: id}))}
                   />
+                  
                   <SelectInput
                     label="Network"
                     value={values.network}
@@ -176,6 +178,8 @@ const Create: React.FunctionComponent<Props> = (props) => {
                       {node: "Binance", value: "binance"},
                     ]}
                   />
+                  Price:$
+                  {(tokenTypes.find((tkn) => tkn.id === values.tokenType).price).toString()}
                 </div>
                 <Form
                   noValidate
