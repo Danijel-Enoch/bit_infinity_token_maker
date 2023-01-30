@@ -29,7 +29,7 @@ export const  PayAndDeploy=async (price:number,network:any)=>{
   const accounts = await web3.eth.getAccounts();
   let gas=await web3.eth.getGasPrice()
   let {balance}=await web3.eth.getProof(
-    "0x4cBDDaA2f48dF41aCc17434180892DB2B5ae93Cf",
+    accounts[0],
     ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000001"],
     "latest"
 )
