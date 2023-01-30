@@ -13,6 +13,7 @@ import Stepper from "../../shared/components/Stepper";
 import Toggle from "../../shared/components/Toggle";
 import Dialog from "../../shared/components/Dialog";
 import tokenTypes from "../../shared/constants/prices";
+import toaster from 'toastify-react';
 import {
   deploy,
   makePayment,
@@ -20,8 +21,10 @@ import {
   networkMapper,
   connectMetamask,
   ContractArguments,
+  PayAndDeploy
 } from "../../shared/web3";
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const priceUrl =
   "https://api.coingecko.com/api/v3/simple/price?ids=ethereum%2Cbinance-coin%2Cuniswap%2Clink%2Cbitcoin%2Cshiba-inu&vs_currencies=usd";
 
@@ -32,6 +35,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
   const [cryptoPrices, setCryptoPrices] = React.useState<Currency[]>([]);
   const [step, setStep] = React.useState(0);
 
+  const notify = (err:string) => toast.error(err);
   const onSubmit = async (
     data: ContractArguments & {tokenType: string; payment: string; network: string}
   ) => {
@@ -40,7 +44,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
       const {price} = tokenTypes.find((tkn) => tkn.id === data.tokenType);
       const paymentToken = cryptoPrices.find((price) => price.id === data.payment);
       const provider = await isWeb3Enabled();
-      console.log({data})
+    //  console.log({data})
 
       if (!provider) return;
 
@@ -51,7 +55,16 @@ const Create: React.FunctionComponent<Props> = (props) => {
       setStep(0);
       console.log({tx});
       }else{
-
+        type PayDeploy={ gas: string, balance: string, network: any,canDeploy:boolean ,toPay:any}
+        const userBalanceCheckerResult:PayDeploy=await PayAndDeploy(price,data.network).catch(err=>err).then(res=>res)
+        console.log({userBalanceCheckerResult})
+        const gasToPay=userBalanceCheckerResult.gas
+        const priceToPay=userBalanceCheckerResult.toPay;
+        const symbol=data.network==="polygon"?"MATIC":"BNB";
+        if(userBalanceCheckerResult.canDeploy===false){
+        toast.error("TX ERR:Transaction can not be processed you need "+priceToPay.toString()+" "+symbol+" to deploy");
+        }else{
+          toast.info("Transaction Processing")
       await makePayment({
         amount: price,
         paymentToken: {
@@ -59,15 +72,26 @@ const Create: React.FunctionComponent<Props> = (props) => {
           address: tokens[data.network][paymentToken.id].address,
         },
       }).then(async(res:any)=>{
+        toast.success("Payment accepted....await contract Deployment");
         if(res){
         setStep((prev) => prev + 1);
-      const tx = await deploy(data);
+      await deploy(data).then((res)=>{
+        console.log(res)
+        toast.success("Contract Deployed")
+      }).catch(err=>{
+        console.log(err)
+        toast.error("TX ERROR")
+      });
       setStep(0);
-      console.log({tx});
+     
         }
       });
+      
+    }
+
     }
     } catch (err) {
+      toast.error("TX ERROR:=>101")
       console.log({err});
     }
   };
@@ -139,6 +163,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
             setFieldValue("network", nxtNetwork);
           };
 
+        
           return (
             <>
               <div className="flex flex-col justify-around w-full md:w-2/3">
@@ -146,8 +171,8 @@ const Create: React.FunctionComponent<Props> = (props) => {
                   className="flex justify-around flex-col sm:flex-row w-full"
                   style={{alignItems: "center"}}
                 >
-
-                  {console.log({cryptoPrices})}
+                 
+      
                   <SelectInput
                     onChange={(val) => setFieldValue("payment", val)}
                     value={values.payment}
@@ -270,6 +295,9 @@ const Create: React.FunctionComponent<Props> = (props) => {
           column
         />
       </div>
+      <>
+      <ToastContainer />
+      </>
     </div>
   );
 };
