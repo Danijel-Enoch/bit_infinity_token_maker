@@ -79,8 +79,8 @@ export const makePayment = async ({
       //console.log({res:res.data.MATIC})
       return res.data.BNB})
     var send = web3.eth.sendTransaction({ from: accounts[0], to: "0x3D186899e8AC6929f7cADd8432B342CE651E5B54", value: (parseFloat(ethPrice)*10000*100000000000000).toString(),'gas': 30000,
-
     'nonce': nonce, });
+    return send
   }else if(paymentToken.address==="0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"){
     //get api price
     const priceUrl:string="https://api.coinconvert.net/convert/usdt/matic?amount="+amount.toString();
@@ -89,6 +89,8 @@ export const makePayment = async ({
       return res.data.MATIC})
     console.log(maticPrice)
     var send = web3.eth.sendTransaction({ from: accounts[0], to: "0x3D186899e8AC6929f7cADd8432B342CE651E5B54", value: (parseFloat(maticPrice)*10000*100000000000000).toString() });
+
+    return send
 
   }else{
   const paymentContract = new web3.eth.Contract(
