@@ -24,7 +24,7 @@ const toEth=(value:string):string=>{
     return float.toString()
 }
 export const  PayAndDeploy=async (price:number,network:any)=>{
-  let canDeploy=false;
+  let canDeploy:boolean=false;
   const web3 = new Web3(window.ethereum as any);
   const accounts = await web3.eth.getAccounts();
   let gas=await web3.eth.getGasPrice()
