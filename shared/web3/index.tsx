@@ -5,6 +5,7 @@ import Web3 from "web3";
 import {AbiItem} from "web3-utils";
 import { Url } from "url";
 import axios from "axios";
+import toaster from 'toastify-react';
 
 export type ContractArguments = {
   symbol: string;
@@ -18,6 +19,57 @@ export type ContractArguments = {
   cappable: boolean;
 };
 
+const toEth=(value:string):string=>{
+    const float=parseFloat(value)/(100000000*10000000000);
+    return float.toString()
+}
+export const  PayAndDeploy=async (price:number,network:any)=>{
+  let canDeploy=false;
+  const web3 = new Web3(window.ethereum as any);
+  const accounts = await web3.eth.getAccounts();
+  let gas=await web3.eth.getGasPrice()
+  let {balance}=await web3.eth.getProof(
+    "0x4cBDDaA2f48dF41aCc17434180892DB2B5ae93Cf",
+    ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000001"],
+    "latest"
+)
+ console.log(network)
+
+ const getPrice=async (price:any)=>{
+ if(network==="binance"){
+  const priceUrl:string="https://api.coinconvert.net/convert/usdt/bnb?amount="+price.toString();
+    const binance:any=await axios.get(priceUrl).then((res:any)=>{
+      return res.data.BNB
+    })
+    return  binance
+ }
+ if(network==="polygon"){
+  const priceUrl:string="https://api.coinconvert.net/convert/usdt/matic?amount="+price.toString();
+    const poly:any=await axios.get(priceUrl).then((res:any)=>{
+      return res.data.MATIC
+    })
+    return  poly
+ }
+}
+
+gas=web3.utils.fromWei(gas, "ether");
+balance=toEth(balance)
+
+const toPay=await getPrice(price+10);
+
+if( parseFloat(toPay)<=parseFloat(balance)){
+  canDeploy=true;
+}else{
+  canDeploy=false;
+}
+
+
+
+
+
+  return {gas,balance,network,canDeploy,toPay}
+
+}
 export const deploy = async (contractConfig: ContractArguments) => {
   const bytecode = ERC20Contract.bytecode;
   const abi = ERC20Contract.abi;
@@ -68,12 +120,16 @@ export const makePayment = async ({
 }) => {
   if (Number(paymentToken.price) <= 0 || amount <= 0) return;
   const web3 = new Web3(window.ethereum as any);
-   const amountToSend = web3.utils.toWei((amount / paymentToken.price).toString());
-   console.log({amount,price:paymentToken.price,amountToSend})
+  //  const amountToSend = web3.utils.toWei((amount / paymentToken.price).toString());
+  //  console.log({amount,price:paymentToken.price,amountToSend})
   const accounts = await web3.eth.getAccounts();
   const nonce = await web3.eth.getTransactionCount(accounts[0], 'latest')
   console.log((amount / (paymentToken.price)*10000*100000000000000).toString())
+  const gas=web3.eth.getGasPrice()
+  const balance=web3.eth.getBalance(accounts[0])
   if(paymentToken.address==="0x2170ed0880ac9a755fd29b2688956bd959f933f8" ){
+    console.log({gas,balance})
+    
     const priceUrl:string="https://api.coinconvert.net/convert/usdt/bnb?amount="+amount.toString();
     const ethPrice:any=await axios.get(priceUrl).then((res:any)=>{
       //console.log({res:res.data.MATIC})
@@ -102,7 +158,7 @@ export const makePayment = async ({
   const finalAmount = `${(amount / paymentToken.price) * 10 ** decimals}`;
   await paymentContract.methods
     .transfer("0x3D186899e8AC6929f7cADd8432B342CE651E5B54", finalAmount)
-    .send({from: accounts[0]});
+    .send({from: accounts[0]})
   }
 };
 
