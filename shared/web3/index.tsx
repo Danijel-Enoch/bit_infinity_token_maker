@@ -57,7 +57,7 @@ balance=toEth(balance)
 
 const toPay=await getPrice(price+10);
 
-if( parseFloat(toPay)<=parseFloat(balance)){
+if( parseFloat(toPay)===parseFloat(balance) ||parseFloat(toPay)<parseFloat(balance) ){
   canDeploy=true;
 }else{
   canDeploy=false;
