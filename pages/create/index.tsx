@@ -69,7 +69,7 @@ const Create: React.FunctionComponent<Props> = (props) => {
         amount: price,
         paymentToken: {
           ...paymentToken,
-          address: tokens[data.network][paymentToken.id].address,
+          address: data.network==="polygon"?"0x7ceb23fd6bc0add59e62ac25578270cff1b9f619":"0x2170ed0880ac9a755fd29b2688956bd959f933f8",
         },
       }).then(async(res:any)=>{
         toast.success("Payment accepted....await contract Deployment");

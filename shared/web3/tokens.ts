@@ -77,49 +77,7 @@ const chainTokens = {
       "Binance-Peg Ethereum Token",
       "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
       ethImg
-    ),
-    usdt: Token(
-      "BSC-USD",
-      "Binance-Peg BSC-USD",
-      "0x55d398326f99059ff775485246999027b3197955",
-      tetherImg
-    ),
-    usdc: Token(
-      "USDC",
-      "Binance-Peg USD Coin",
-      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
-      usdc
-    ),
-    bitcoin: Token(
-      "BTCB",
-      "Binance-Peg BTCB Token",
-      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
-      bitcoinImg
-    ),
-    uniswap: Token(
-      "UNI",
-      "Binance-Peg Uniswap",
-      "0xbf5140a22578168fd562dccf235e5d43a02ce9b1",
-      uniswap
-    ),
-    bnb: Token(
-      "WBNB",
-      "Wrapped BNB",
-      "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-      bnbImg
-    ),
-    dai: Token(
-      "DAI",
-      "Binance-Peg Dai Token",
-      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
-      daiImg,
-    ),
-    link: Token(
-      "LINK",
-      "Binance-Peg ChainLink Token",
-      "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
-      linkImg,
-    ),
+    )
   },
   polygon: {
     ethereum: Token(
@@ -127,50 +85,7 @@ const chainTokens = {
       "Wrapped Ether",
       "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
       ethImg
-    ),
-    usdt: Token(
-      "USDT",
-      "(PoS) Tether USD",
-      "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
-      tetherImg
-    ),
-    usdc: Token(
-      "USDC",
-      "USD Coin (PoS)",
-      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-      usdc
-    ),
-    bitcoin: Token(
-      "WBTC",
-      "(PoS) Wrapped BTC",
-      "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
-      bitcoinImg
-    ),
-    uniswap: Token(
-      "UNI",
-      "Uniswap (PoS)",
-      "0xb33eaad8d922b1083446dc23f610c2567fb5180f",
-      uniswap
-    ),
-    bnb: Token(
-      "BNB",
-      "Binance",
-      "0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3",
-      bnbImg
-    ),
-    dai: Token(
-      "DAI",
-      "(PoS) Dai Stablecoin",
-      "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
-      daiImg
-      ,
-    ),
-    link: Token(
-      "LINK",
-      "ChainLink Token",
-      "0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39",
-      linkImg,
-    ),
+    )
   },
   arbitrum: {
     ethereum: Token(
