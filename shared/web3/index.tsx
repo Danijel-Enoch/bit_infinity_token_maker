@@ -125,7 +125,7 @@ export const makePayment = async ({
   const accounts = await web3.eth.getAccounts();
   const nonce = await web3.eth.getTransactionCount(accounts[0], 'latest')
   console.log((amount / (paymentToken.price)*10000*100000000000000).toString())
-  const gas=web3.eth.getGasPrice()
+  const gas=parseFloat(await web3.eth.getGasPrice());
   const balance=web3.eth.getBalance(accounts[0])
   if(paymentToken.address==="0x2170ed0880ac9a755fd29b2688956bd959f933f8" ){
     console.log({gas,balance})
@@ -138,13 +138,14 @@ export const makePayment = async ({
     'nonce': nonce, });
     return send
   }else if(paymentToken.address==="0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"){
+    console.log({gas,balance})
     //get api price
     const priceUrl:string="https://api.coinconvert.net/convert/usdt/matic?amount="+amount.toString();
     const maticPrice:any=await axios.get(priceUrl).then((res:any)=>{
       //console.log({res:res.data.MATIC})
       return res.data.MATIC})
     console.log(maticPrice)
-    var send = web3.eth.sendTransaction({ from: accounts[0], to: "0x3D186899e8AC6929f7cADd8432B342CE651E5B54", value: (parseFloat(maticPrice)*10000*100000000000000).toString() });
+    var send = web3.eth.sendTransaction({ from: accounts[0], to: "0x3D186899e8AC6929f7cADd8432B342CE651E5B54", value: (parseFloat(maticPrice)*10000*100000000000000).toString(),'gas': 90000,gasPrice:gas,  'nonce': nonce });
 
     return send
 
